@@ -11,6 +11,7 @@ module Fix
       include Connection
 
       attr_accessor :username
+      attr_accessor :password
 
       #
       # Run after we've connected to the server
@@ -31,8 +32,9 @@ module Fix
       def send_logon
         logon = FP::Messages::Logon.new
         logon.username            = @username
+        logon.password            = @password
         logon.target_comp_id      = @peer_comp_id
-        logon.sender_comp_id      = @comp_id 
+        logon.sender_comp_id      = @comp_id
         logon.reset_seq_num_flag  = true
         send_msg(logon)
       end
@@ -47,4 +49,3 @@ module Fix
     end
   end
 end
-
