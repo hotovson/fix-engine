@@ -47,7 +47,7 @@ module Fix
       # @return [Boolean] Whether the message is complete
       #
       def complete?
-        @fields.count.positive? && (@fields.last[0] == 10)
+        @fields.count > 0 && (@fields.last[0] == 10)
       end
 
       #
