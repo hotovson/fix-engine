@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
 
-gemspec
+gem 'fix-protocol', git: 'https://github.com/hotovson/fix-protocol.git'
 
+gemspec
