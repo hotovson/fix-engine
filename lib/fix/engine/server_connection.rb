@@ -3,12 +3,10 @@ require 'fix/engine/client'
 
 module Fix
   module Engine
-
     #
     # The server connection wrapper, used when accepting a connection
     #
     module ServerConnection
-
       include Connection
 
       #
@@ -35,9 +33,9 @@ module Fix
       #
       def logon_timeout
         unless @target_comp_id
-        log("Client #{peer} failed to authenticate before timeout, closing connection")
-        close_connection_after_writing
-        client.delete
+          log("Client #{peer} failed to authenticate before timeout, closing connection")
+          close_connection_after_writing
+          client.delete
         end
       end
 
@@ -68,7 +66,8 @@ module Fix
       #
       def run_message_handler(msg)
         if !@target_comp_id && msg.is_a?(FP::Messages::Logon)
-          log("Peer authenticated as <#{msg.username}> with heartbeat interval of <#{msg.heart_bt_int}s> and message sequence number start <#{msg.msg_seq_num}>")
+          log("Peer authenticated as <#{msg.username}> with heartbeat interval of <#{msg.heart_bt_int}s>
+               and message sequence number start <#{msg.msg_seq_num}>")
           client.username = msg.username
           @target_comp_id = msg.sender_comp_id
           set_heartbeat_interval(msg.heart_bt_int)
@@ -76,7 +75,7 @@ module Fix
           logon                     = FP::Messages::Logon.new
           logon.username            = msg.username
           logon.target_comp_id      = msg.sender_comp_id
-          logon.sender_comp_id      = msg.target_comp_id 
+          logon.sender_comp_id      = msg.target_comp_id
           logon.reset_seq_num_flag  = true
 
           send_msg(logon)
@@ -89,15 +88,17 @@ module Fix
           end
 
         elsif !@target_comp_id
-          peer_error("The session must be started with a logon message", msg.msg_seq_num, target_comp_id: msg.sender_comp_id)
+          peer_error(
+            'The session must be started with a logon message',
+            msg.msg_seq_num,
+            target_comp_id: msg.sender_comp_id
+          )
 
         else
           super(msg)
 
         end
       end
-
     end
   end
 end
-

@@ -3,7 +3,6 @@ require_relative '../../spec_helper'
 require 'fix/engine/client'
 
 describe 'FE::Client' do
-
   before do
     @client = FE::Client.new('127.0.0.1', 6464, Object.new)
   end
@@ -31,5 +30,4 @@ describe 'FE::Client' do
       expect { FE::Client.delete('1.2.3.4', 6289) }.to change { FE::Client.count }.by(-1)
     end
   end
-
 end

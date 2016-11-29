@@ -1,7 +1,6 @@
 require_relative '../../spec_helper'
 
 describe 'FE::ClientConnection' do
-
   before do
     class SampleClientConnection
       include FE::ClientConnection
@@ -27,6 +26,4 @@ describe 'FE::ClientConnection' do
       expect(@conn.instance_variable_get(:@logged_in)).to be_truthy
     end
   end
-
 end
-

@@ -3,7 +3,6 @@ require_relative '../../spec_helper'
 require 'fix/engine/message_buffer'
 
 describe 'FE::MessageBuffer' do
-
   before do
     @msg = FE::MessageBuffer.new { |m| }
   end
@@ -35,7 +34,7 @@ describe 'FE::MessageBuffer' do
   describe '#debug' do
     it 'should output the message in a readable format' do
       @msg.add_data("69=DATA\x0170=OTHER_DATA\x0171=SOME_INCOMPLETE_DATA")
-      expect(@msg.debug).to eql("69=DATA|70=OTHER_DATA|71=SOME_INCOMPLETE_DATA")
+      expect(@msg.debug).to eql('69=DATA|70=OTHER_DATA|71=SOME_INCOMPLETE_DATA')
     end
   end
 
@@ -60,6 +59,4 @@ describe 'FE::MessageBuffer' do
       @mb.parse_messages
     end
   end
-
 end
-

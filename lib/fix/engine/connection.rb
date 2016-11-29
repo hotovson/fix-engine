@@ -4,12 +4,10 @@ require 'fix/engine/message_buffer'
 
 module Fix
   module Engine
-
     #
     # The client connection handling logic and method overrides
     #
     module Connection
-
       include Logger
 
       #
@@ -33,7 +31,7 @@ module Fix
       # The way we refer to our connection peer in various logs and messages
       #
       def peer
-        "server"
+        'server'
       end
 
       #
@@ -169,12 +167,12 @@ module Fix
         log("Received a <#{msg.class}> from #{peer} with sequence number <#{msg.msg_seq_num}>")
 
         # If sequence number == expected, then process it normally
-        if (@expected_seq_num == @recv_seq_num)
+        if @expected_seq_num == @recv_seq_num
           if @comp_id && msg.target_comp_id != @comp_id
             @target_comp_id = msg.sender_comp_id
 
             # Whoops, incorrect COMP_ID received, kill it with fire
-            if (msg.target_comp_id != @comp_id)
+            if msg.target_comp_id != @comp_id
               peer_error("Incorrect TARGET_COMP_ID in message, expected <#{@comp_id}>, got <#{msg.target_comp_id}>", msg.header.msg_seq_num)
             end
 
@@ -207,8 +205,9 @@ module Fix
 
           @expected_seq_num += 1
 
-        elsif (@expected_seq_num > @recv_seq_num)
-          log("Ignoring message <#{msg}> with stale sequence number <#{msg.msg_seq_num}>, expecting <#{@expected_seq_num}>")
+        elsif @expected_seq_num > @recv_seq_num
+          log("Ignoring message <#{msg}> with stale sequence number <#{msg.msg_seq_num}>,
+               expecting <#{@expected_seq_num}>")
 
         elsif (@expected_seq_num < @recv_seq_num) && @target_comp_id
           # Request missing range when detect a gap
@@ -239,26 +238,22 @@ module Fix
       def receive_data(data)
         @buf ||= MessageBuffer.new do |parsed|
           if (parsed.class == FP::ParseFailure) || !parsed.errors.count.zero?
-            peer_error("#{parsed.message} -- #{parsed.errors.join(", ")}", @expected_seq_num)
+            peer_error("#{parsed.message} -- #{parsed.errors.join(', ')}", @expected_seq_num)
             log("Failed to parse message <#{parsed.message}>")
             parsed.errors.each { |err| log(" >>> #{err}") }
-
           else
             process_msg(parsed)
-
           end
         end
 
         begin
           @buf.add_data(data)
-        rescue
-          log("Raised exception by #{peer} when parsing data <#{@buf.msg_buf.gsub(/\x01/, '|')}>, terminating.")
-          log($!.message + $!.backtrace.join("\n"))
+        rescue => e
+          log("Raised exception by #{peer} when parsing data <#{@buf.msg_buf.tr("\x01", '|')}>, terminating.")
+          log(e.message + e.backtrace.join("\n"))
           kill!
         end
       end
-
     end
   end
 end
-

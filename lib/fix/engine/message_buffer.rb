@@ -2,13 +2,11 @@ require 'fix/protocol'
 
 module Fix
   module Engine
-
     #
     # A FIX message to which fields get appended, once it is completed by a
     # proper terminator it is handled
     #
     class MessageBuffer
-
       include Logger
 
       attr_accessor :fields, :client
@@ -16,7 +14,7 @@ module Fix
       def initialize(&block)
         @fields = []
 
-        raise "A block accepting a FP::Message as single parameter must be provided" unless (block && (block.arity == 1))
+        raise 'A block accepting a FP::Message as single parameter must be provided' unless block && (block.arity == 1)
         @msg_handler = block
       end
 
@@ -36,7 +34,7 @@ module Fix
       # @param fld [String] A FIX formatted field, such as "35=0\x01"
       #
       def append(fld)
-        raise "Cannot append to complete message" if complete?
+        raise 'Cannot append to complete message' if complete?
         field = fld.split('=')
         field[0] = field[0].to_i
         field[1] = field[1].gsub(/\x01\Z/, '')
@@ -49,7 +47,7 @@ module Fix
       # @return [Boolean] Whether the message is complete
       #
       def complete?
-        (@fields.count > 0) && (@fields.last[0] == 10)
+        @fields.count.positive? && (@fields.last[0] == 10)
       end
 
       #
@@ -61,11 +59,11 @@ module Fix
           field = msg_buf.slice!(0, idx + 1).gsub(/\x01\Z/, '')
           append(field)
 
-          if complete?
-            parsed = FP.parse(to_s)
-            @fields = []
-            @msg_handler.call(parsed)
-          end
+          next unless complete?
+
+          parsed = FP.parse(to_s)
+          @fields = []
+          @msg_handler.call(parsed)
         end
       end
 
@@ -94,8 +92,6 @@ module Fix
       def to_s(sep = "\x01")
         fields.map { |f| f.join('=') }.join(sep) + sep
       end
-
     end
   end
 end
-

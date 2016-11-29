@@ -2,12 +2,10 @@ require 'logger'
 
 module Fix
   module Engine
-
     #
     # Naive logger implementation used in development
     #
     module Logger
-
       @@logger = nil
 
       #
@@ -33,7 +31,6 @@ module Fix
       def self.logger
         @logger ||= ::Logger.new(STDOUT)
       end
-
     end
   end
 end

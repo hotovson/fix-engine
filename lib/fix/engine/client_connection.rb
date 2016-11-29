@@ -2,12 +2,10 @@ require 'fix/engine/connection'
 
 module Fix
   module Engine
-
     #
     # The client connection wrapper, used in order to connect a remote FIX server
     #
     module ClientConnection
-
       include Connection
 
       attr_accessor :username
@@ -42,10 +40,9 @@ module Fix
       #
       # Consider ourselves logged-in if we receive on of these
       #
-      def on_logon(msg)
+      def on_logon(_msg)
         @logged_in = true
       end
-
     end
   end
 end

@@ -1,7 +1,6 @@
 require_relative '../spec_helper'
 
 describe 'Fix::Engine' do
-
   describe '.alias_namespace!' do
     it 'should have already been called' do
       expect(FE).to be(Fix::Engine)
@@ -15,6 +14,4 @@ describe 'Fix::Engine' do
       FE.run!('foo', 'bar')
     end
   end
-
 end
-

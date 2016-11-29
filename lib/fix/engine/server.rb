@@ -6,12 +6,10 @@ require 'fix/engine/server_connection'
 
 module Fix
   module Engine
-
     #
     # Main FIX engine server class
     #
     class Server
-
       include Logger
 
       #
@@ -41,7 +39,7 @@ module Fix
       # Starts a listener inside a running reactor
       #
       def start_server
-        raise "EventMachine must be running to start a server" unless EM.reactor_running?
+        raise 'EventMachine must be running to start a server' unless EM.reactor_running?
 
         EM.start_server(ip, port, @handler) { |conn| @block && @block.call(conn) }
 
@@ -54,7 +52,6 @@ module Fix
       def report_status
         log("#{Client.count} client(s) currently connected")
       end
-
     end
   end
 end

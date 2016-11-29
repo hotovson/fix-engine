@@ -6,14 +6,12 @@ require 'fix/engine/client_connection'
 # Main FIX namespace
 #
 module Fix
-
   #
   # Main Fix::Engine namespace
   #
   module Engine
-
-    # The default IP on which the server will listen    
-    DEFAULT_IP    = '0.0.0.0'
+    # The default IP on which the server will listen
+    DEFAULT_IP    = '0.0.0.0'.freeze
 
     # The default port on which the server will listen
     DEFAULT_PORT  = 8359
@@ -31,9 +29,7 @@ module Fix
     def self.alias_namespace!
       Object.const_set(:FE, Engine) unless Object.const_defined?(:FE)
     end
-
   end
 end
 
 Fix::Engine.alias_namespace!
-

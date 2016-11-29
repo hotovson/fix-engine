@@ -1,7 +1,6 @@
 require_relative '../../spec_helper'
 
 describe 'FE::Logger' do
-
   before do
     @o = Object.new
     @o.instance_eval do
@@ -18,7 +17,4 @@ describe 'FE::Logger' do
       @o.log('foo')
     end
   end
-
 end
-
-

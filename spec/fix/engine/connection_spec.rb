@@ -1,10 +1,8 @@
 require_relative '../../spec_helper'
 
-
-#require 'socket'
+# require 'socket'
 
 describe 'FE::Connection' do
-
   before do
     class SampleConnection
       include FE::Connection
@@ -127,7 +125,9 @@ describe 'FE::Connection' do
     it 'should notify parse failures' do
       expect_any_instance_of(FE::MessageBuffer).to receive(:add_data).with('foo')
       expect(@conn).to receive(:peer_error)
-      expect(FE::MessageBuffer).to receive(:new).and_yield(FP::ParseFailure.new(nil)).and_return(FE::MessageBuffer.new { |p| })
+      expect(FE::MessageBuffer).to receive(:new)
+        .and_yield(FP::ParseFailure.new(nil))
+        .and_return(FE::MessageBuffer.new { |p| })
       @conn.receive_data('foo')
     end
 
@@ -142,7 +142,6 @@ describe 'FE::Connection' do
   end
 
   describe '#process_msg' do
-
     it 'should respond to resend requests' do
       rr = FP::Messages::ResendRequest.new
       rr.msg_seq_num = 1
@@ -187,7 +186,7 @@ describe 'FE::Connection' do
       mdr = FP::Messages::MarketDataRequest.new
       mdr.sender_comp_id  = 'PEER'
       mdr.target_comp_id  = 'ME'
-      mdr.msg_seq_num     = 1  
+      mdr.msg_seq_num     = 1
 
       expect(@conn).to receive(:run_message_handler).with(mdr)
       @conn.process_msg(mdr)
@@ -228,6 +227,4 @@ describe 'FE::Connection' do
       @conn.process_msg(mdr)
     end
   end
-
 end
-

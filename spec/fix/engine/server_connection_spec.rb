@@ -1,7 +1,6 @@
 require_relative '../../spec_helper'
 
 describe 'FE::ServerConnection' do
-
   before do
     class SampleServerConnection
       include FE::ServerConnection
@@ -14,7 +13,7 @@ describe 'FE::ServerConnection' do
   describe '#post_init' do
     it 'should register a client and add a logon timeout' do
       allow(@conn).to receive(:get_peername).and_return('foo')
-      expect(Socket).to receive(:unpack_sockaddr_in).once.with('foo').and_return(['some_port', 'some_ip'])
+      expect(Socket).to receive(:unpack_sockaddr_in).once.with('foo').and_return(%w(some_port some_ip))
       expect(EM).to receive(:add_timer).once.with(FE::ServerConnection::LOGON_TIMEOUT)
       @conn.post_init
     end
@@ -36,7 +35,6 @@ describe 'FE::ServerConnection' do
   end
 
   describe '#run_message_handler' do
-
     it 'should log a client in when presented with an initial logon message' do
       @conn.instance_variable_set(:@target_comp_id, nil)
 
@@ -97,5 +95,4 @@ describe 'FE::ServerConnection' do
       @conn.run_message_handler(mdr)
     end
   end
-
 end
