@@ -74,7 +74,7 @@ describe 'FE::Connection' do
 
   describe '#send_msg' do
     it 'should raise when attempting to send an invalid message' do
-      expect { @conn.send_msg(FP::Messages::Logon.new) }.to raise_error
+      expect { @conn.send_msg(FP::Messages::Logon.new) }.to raise_error RuntimeError
     end
   end
 

@@ -14,7 +14,7 @@ describe 'FE::Server' do
 
   describe '#start_server' do
     it 'should raise an error if no reactor is running' do
-      expect { @server.start_server }.to raise_error
+      expect { @server.start_server }.to raise_error RuntimeError
     end
 
     it 'should start a listener if a reactor is running' do

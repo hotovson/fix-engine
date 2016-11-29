@@ -15,7 +15,7 @@ describe 'FE::MessageBuffer' do
 
     it 'should explode if appending to a completed message' do
       expect(@msg).to receive(:complete?).once.and_return(true)
-      expect { @msg.append("69=SEX\x01") }.to raise_error
+      expect { @msg.append("69=SEX\x01") }.to raise_error RuntimeError
     end
   end
 
