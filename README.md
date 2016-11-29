@@ -1,4 +1,4 @@
-FIX Engine [![Build Status](https://secure.travis-ci.org/Paymium/fix-engine.png?branch=master)](http://travis-ci.org/Paymium/fix-engine) [![Coverage Status](https://img.shields.io/coveralls/Paymium/fix-engine.svg)](https://coveralls.io/r/Paymium/fix-engine?branch=master)  [![Gem Version](https://badge.fury.io/rb/fix-engine.svg)](http://badge.fury.io/rb/fix-engine)
+FIX Engine [![Build Status](https://travis-ci.org/hotovson/fix-engine.svg?branch=master)](https://travis-ci.org/hotovson/fix-engine) [![Coverage Status](https://coveralls.io/repos/github/hotovson/fix-engine/badge.svg?branch=master)](https://coveralls.io/github/hotovson/fix-engine?branch=master)
 =
 
 This library provides an event-machine based FIX server and client connection implementation.
@@ -70,7 +70,7 @@ end
 
 ## Use it to connect to a FIX acceptor
 
-Once your connection class has been created you can establish a connection in a running EventMachine reactor. 
+Once your connection class has been created you can establish a connection in a running EventMachine reactor.
 See the [referee gem](https://github.com/davout/referee) for the full code example.
 
 ````ruby
@@ -151,4 +151,3 @@ EM.run do
   server.start_server
 end
 ````
-

@@ -1,0 +1,37 @@
+AllCops:
+  Include:
+    - '**/Gemfile'
+    - '**/Rakefile'
+  Exclude:
+   - 'bin/*'
+   - 'db/seeds.rb'
+   - 'db/schema.rb'
+   - 'vendor/bundle/**/*'
+  TargetRubyVersion: 2.3
+Lint/Eval:
+  Exclude:
+    - 'lib/scripts/language_files_from_csv.rb'
+Metrics/AbcSize:
+  Max: 60             # default 15
+Metrics/BlockNesting:
+  Max: 3
+Metrics/ClassLength:
+  Max: 1000           # default 100
+Metrics/CyclomaticComplexity:
+  Max: 10             # default 6
+Metrics/LineLength:
+  Max: 120            # default 80
+Metrics/MethodLength:
+  Max: 15             # default 10
+Metrics/ModuleLength:
+  Max: 200            # default 100
+Metrics/PerceivedComplexity:
+  Max: 21             # default 7
+Rails:
+  Enabled: true
+Style/Alias:
+  EnforcedStyle: prefer_alias_method
+Style/Documentation:
+  Enabled: false
+Style/FrozenStringLiteralComment:
+  Enabled: false
