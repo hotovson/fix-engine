@@ -7,7 +7,7 @@ describe 'FE::ServerConnection' do
     end
 
     @conn = SampleServerConnection.new
-    @conn.comp_id = 'foobar'
+    @conn.sender_comp_id = 'foobar'
   end
 
   describe '#post_init' do

@@ -10,7 +10,7 @@ describe 'FE::Connection' do
 
     @conn = SampleConnection.new
     @conn.target_comp_id = 'PEER'
-    @conn.comp_id = 'ME'
+    @conn.sender_comp_id = 'ME'
 
     @conn.post_init
   end

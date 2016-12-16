@@ -15,10 +15,10 @@ module Fix
       #
       TEST_REQ_GRACE_TIME = 15
 
-      attr_accessor :ip, :port, :msg_buf, :hrtbt_int, :last_request_at, :comp_id, :target_comp_id
+      attr_accessor :ip, :port, :msg_buf, :hrtbt_int, :last_request_at, :sender_comp_id, :target_comp_id
 
       #
-      # Initialize the messages array, our comp_id, and the expected message sequence number
+      # Initialize the messages array, our sender_comp_id, and the expected message sequence number
       #
       def post_init
         @expected_seq_num = 1
@@ -101,7 +101,7 @@ module Fix
         @send_seq_num ||= 1
 
         msg.msg_seq_num     = @send_seq_num
-        msg.sender_comp_id  = @comp_id
+        msg.sender_comp_id  = @sender_comp_id
         msg.target_comp_id  = @target_comp_id
 
         log("Sending <#{msg.class}> to #{peer} with sequence number <#{msg.msg_seq_num}>")
@@ -168,12 +168,12 @@ module Fix
 
         # If sequence number == expected, then process it normally
         if @expected_seq_num == @recv_seq_num
-          if @comp_id && msg.target_comp_id != @comp_id
+          if @sender_comp_id && msg.target_comp_id != @sender_comp_id
             @target_comp_id = msg.sender_comp_id
 
             # Whoops, incorrect COMP_ID received, kill it with fire
-            if msg.target_comp_id != @comp_id
-              peer_error("Incorrect TARGET_COMP_ID in message, expected <#{@comp_id}>, got <#{msg.target_comp_id}>", msg.header.msg_seq_num)
+            if msg.target_comp_id != @sender_comp_id
+              peer_error("Incorrect TARGET_COMP_ID in message, expected <#{@sender_comp_id}>, got <#{msg.target_comp_id}>", msg.header.msg_seq_num)
             end
 
           else
